@@ -1,5 +1,5 @@
 # BigBrother
-a network traffic monitoring lib with an integrated IDS  
+a network traffic monitor/IDS
 # IDEA  
 - the IDS has two modes:
     1. Watch and Collect: Scannes and collects info from malicious ip addresses
