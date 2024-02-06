@@ -1,15 +1,6 @@
 use pnet::datalink::{Channel, linux};
 use pnet::datalink::ChannelType;
 fn main(){
-    //let interfaces = linux::interfaces();
-    // list all network interfaces
-    /*
-    for interface in interfaces{
-        println!("{}\n{}", interface.name, interface.description);
-        interface.ips.iter().for_each(|e| println!("{:?}", e));
-    }
-    */
-
     let interface = linux::interfaces().into_iter().find(|e| e.name == "enp42s0").unwrap();
 
     let config = linux::Config{
