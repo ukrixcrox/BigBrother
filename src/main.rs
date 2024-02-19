@@ -5,7 +5,9 @@ use pnet::packet::ethernet::EthernetPacket;
 use pnet::packet::Packet;
 
 fn main(){
-    let interface = linux::interfaces().into_iter().find(|e| e.name == "enp42s0").unwrap();
+    // get a network interface that is running and is not the loopback
+    let interface = linux::interfaces().into_iter().find(|ni| ni.is_running() && ni.name != "lo").unwrap();
+
 
     let config = linux::Config{
         write_buffer_size: 4096,
@@ -24,6 +26,7 @@ fn main(){
         Err(e) => panic!("An error occurred when creating the datalink channel: {}", e),
     };
 
+    println!("Start Listening on: {:?}", interface.name);
     loop{
         match rx.next(){
             Ok(packet) => {
@@ -31,14 +34,14 @@ fn main(){
                 let mut packet_packet = packet.packet();
                 let mut some_string = String::new();
 
+                /* 
                 packet_packet.read_to_string(&mut some_string).unwrap();
                 println!("{}", some_string);
+                */
 
-                /*
                 for byte in packet_packet{
                     print!("{:02X}", byte);
                 }
-                */
                 //println!("{}", std::str::from_utf8(packet_packet).unwrap())
 
             }
